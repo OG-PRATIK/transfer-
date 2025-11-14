@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SAMPAT TRANSSOLUTION PVT. LTD.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+            scroll-behavior: smooth;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #00d9ff;
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #00d9ff, 0 0 20px #00d9ff;
+            }
+
+            to {
+                text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff;
+            }
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #00d9ff;
+        }
+
+        section {
+            padding: 60px 30px;
+            border-bottom: 1px solid #444;
+            animation: fadeIn 2s ease;
+        }
+
+        h2 {
+            color: #00d9ff;
+            margin-bottom: 20px;
+        }
+
+        .counter {
+            font-size: 2rem;
+            color: #fcd303;
+            font-weight: bold;
+        }
+
+        .truck-icon {
+            font-size: 4rem;
+            animation: moveTruck 2s infinite alternate;
+            display: inline-block;
+        }
+
+        @keyframes moveTruck {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(10px);
+            }
+        }
+
+        footer {
+            background: #111;
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer small {
+            color: #aaa;
+        }
+
+        input,
+        select,
+        textarea,
+        button {
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 500px;
+            display: block;
+            border-radius: 5px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        button {
+            background: #00d9ff;
+            color: #000;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #00b8d4;
+        }
+
+        iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+            margin-top: 20px;
+        }
+
+        .booking-counter {
+            background: #1e1e2f;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+            text-align: center;
+        }
+
+        .booking-counter h3 {
+            color: #fcd303;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .booking-counter span {
+            font-size: 3rem;
+            color: #00ffea;
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>SAMPAT TRANSSOLUTION PVT. LTD. <span class="truck-icon">🚚</span></h1>
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#booking">Booking</a>
+            <a href="#track">Track</a>
+            <a href="#specs">Specifications</a>
+            <a href="#import">Import/Export</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <section id="home">
+        <h2>1. Homepage</h2>
+        <p>Welcome to <strong>SAMPAT TRANSSOLUTION PVT. LTD.</strong> - Driven by Excellence in Road Transport.</p>
+        <div class="booking-counter">
+            <h3>Total Bookings</h3>
+            <span id="booking-count">1287</span>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2>2. About Us</h2>
+        <p>Our mission is to provide reliable and timely transport services across India.</p>
+        <p class="counter">Years in Business: 10+</p>
+    </section>
+
+    <section id="services">
+        <h2>3. Services</h2>
+        <ul>
+            <li>Local & Interstate Cargo</li>
+            <li>Express Delivery</li>
+            <li>Warehousing & Logistics</li>
+            <li>Door-to-Door Services</li>
+        </ul>
+    </section>
+
+    <section id="booking">
+        <h2>4. Booking</h2>
+        <form action="/submit-booking" method="POST">
+            <input name="name" type="text" placeholder="Full Name" required>
+            <input name="email" type="email" placeholder="Email Address" required>
+            <input name="pickup" type="text" placeholder="Pickup Location" required>
+            <input name="delivery" type="text" placeholder="Delivery Location" required>
+            <select name="vehicle" required>
+                <option value="">-- Select Vehicle Type --</option>
+                <option value="Mini Truck">Mini Truck</option>
+                <option value="Tempo">Tempo</option>
+                <option value="Container">Container</option>
+            </select>
+            <textarea name="cargo" placeholder="Cargo Description"></textarea>
+            <button type="submit">Book Now</button>
+        </form>
+    </section>
+
+    <section id="track">
+        <h2>5. Track Shipment</h2>
+        <input type="text" placeholder="Enter Tracking ID">
+        <button>Track</button>
+    </section>
+
+    <section id="specs">
+        <h2>6. Specifications</h2>
+        <p>Details on vehicle dimensions, load capacity, GPS, and safety compliance.</p>
+    </section>
+
+    <section id="import">
+        <h2>7. Import/Export</h2>
+        <p>We handle customs, freight forwarding, and port clearance efficiently.</p>
+    </section>
+
+    <section id="contact">
+        <h2>8. Contact Us</h2>
+        <p>Address: Dehugaon, Pune, Maharashtra 412209</p>
+        <p>Phone: +91 8999800289</p>
+        <p>Email: contact@sampatlogistics.com</p>
+        <iframe src="https://maps.google.com/maps?q=Dehugaon%20Pune&t=&z=13&ie=UTF8&iwloc=&output=embed"></iframe>
+    </section>
+
+    <footer>
+        <small>Developed by PRATIK_PANDULE | &copy; 2025 SAMPAT TRANSSOLUTION PVT. LTD.</small>
+    </footer>
+
+    <script>
+        let count = 1287;
+        setInterval(() => {
+            count++;
+            document.getElementById('booking-count').textContent = count;
+        }, 5000);
+    </script>
+
+    <!-- Live Chat Widget (Tawk.to) -->
+    <script>
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/65cfe93e0ff6374032c14f12/1hm67e71g';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+
+</body>
+
+</html>
