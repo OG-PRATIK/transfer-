@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>OG-PRATIK — Ultimate Dev & Ethical Hacking Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Custom animations & tweaks */
+    .page { display: none; }
+    .page.active { display: block; }
+    .fade { opacity: 0; transform: translateY(6px); transition: opacity .35s ease, transform .35s ease; }
+    .fade.show { opacity: 1; transform: translateY(0); }
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); align-items: center; justify-content: center; z-index:50 }
+    .modal.grid { display: grid; }
+    .modal .panel { transform: translateY(10px); transition: transform .25s ease, opacity .25s ease; opacity:0 }
+    .modal.active { display: flex }
+    .modal.active .panel { transform: translateY(0); opacity:1 }
+    .mobile-drawer { transform: translateX(-110%); transition: transform .28s ease }
+    .mobile-drawer.open { transform: translateX(0) }
+    .hero-wave { animation: floaty 6s ease-in-out infinite }
+    @keyframes floaty { 0%{transform: translateY(0)}50%{transform: translateY(-8px)}100%{transform: translateY(0)} }
+    .pulse-slow { animation: pulse 2.5s infinite }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 antialiased">
+
+  <!-- Header -->
+  <header class="flex items-center justify-between px-6 py-4 bg-gradient-to-r from-slate-800 to-slate-900 shadow">
+    <div class="flex items-center gap-4">
+      <button id="mobileMenuBtn" class="md:hidden p-2 rounded bg-indigo-600" aria-label="open menu">☰</button>
+      <div class="text-2xl font-extrabold">OG-PRATIK</div>
+    </div>
+
+    <div class="hidden md:flex items-center gap-4">
+      <input id="searchInput" type="search" placeholder="Search tools, courses..." class="px-3 py-2 rounded bg-slate-800 border border-slate-700 w-80" />
+      <button id="loginBtn" class="px-3 py-2 bg-indigo-600 rounded">Login</button>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <aside id="mobileDrawer" class="mobile-drawer fixed top-0 left-0 h-full w-72 bg-slate-800 p-6 z-40 md:hidden">
+    <div class="flex items-center justify-between mb-4">
+      <div class="text-lg font-bold">OG-PRATIK</div>
+      <button onclick="toggleMobile()" class="p-2 rounded bg-slate-700">✕</button>
+    </div>
+    <nav class="flex flex-col gap-2">
+      <button class="nav-link p-2 text-left" data-page="landing">Home</button>
+      <button class="nav-link p-2 text-left" data-page="home">Dashboard</button>
+      <button class="nav-link p-2 text-left" data-page="aiTools">AI Tools</button>
+      <button class="nav-link p-2 text-left" data-page="hacking">Hacking Courses</button>
+      <button class="nav-link p-2 text-left" data-page="automation">Automation</button>
+      <button class="nav-link p-2 text-left" data-page="gadgets">Gadgets</button>
+      <button class="nav-link p-2 text-left" data-page="saved">Saved Tools</button>
+      <button class="nav-link p-2 text-left" data-page="about">About</button>
+      <button class="nav-link p-2 text-left" data-page="login">Login</button>
+    </nav>
+  </aside>
+
+  <div class="md:grid md:grid-cols-12 gap-6 p-6">
+
+    <!-- LEFT NAV -->
+    <aside class="hidden md:block md:col-span-3 bg-slate-800 rounded-xl p-5 h-fit">
+      <nav class="flex flex-col gap-3">
+        <button class="nav-link p-3 rounded hover:bg-slate-700 text-left" data-page="home">Dashboard</button>
+        <button class="nav-link p-3 rounded hover:bg-slate-700 text-left" data-page="aiTools">AI Tools Directory</button>
+        <button class="nav-link p-3 rounded hover:bg-slate-700 text-left" data-page="hacking">Ethical Hacking Courses</button>
+        <button class="nav-link p-3 rounded hover:bg-slate-700 text-left" data-page="automation">Automation Tutorials</button>
+        <button class="nav-link p-3 rounded hover:bg-slate-700 text-left" data-page="gadgets">Tech & Gadget Reviews</button>
+        <button class="nav-link p-3 rounded hover:bg-slate-700 text-left" data-page="saved">Saved Tools</button>
+        <button class="nav-link p-3 rounded hover:bg-slate-700 text-left" data-page="about">About / Developers</button>
+      </nav>
+
+      <div class="mt-6">
+        <h4 class="font-semibold">Quick Actions</h4>
+        <div class="flex flex-col gap-2 mt-2">
+          <button class="px-3 py-2 bg-indigo-600 rounded" onclick="openModal('notif')">Show Notification</button>
+          <button class="px-3 py-2 bg-slate-700 rounded" onclick="openModal('aiGen')">Generate AI Content</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="md:col-span-6">
+
+      <!-- LANDING HERO -->
+      <section id="landing" class="page active fade show bg-gradient-to-b from-indigo-700 to-slate-900 rounded-xl p-10 mb-6">
+        <h1 class="text-4xl md:text-5xl font-extrabold mb-3 hero-wave">OG-PRATIK</h1>
+        <p class="text-lg opacity-80 mb-6">All-in-one hub for developers, AI tools, ethical hacking (safe & legal), automation tutorials and gadget reviews.</p>
+        <div class="flex gap-3 justify-center md:justify-start">
+          <button class="px-6 py-3 bg-indigo-600 rounded-lg shadow-lg hover:scale-105 transition transform" onclick="openPage('home')">Enter Dashboard</button>
+          <button class="px-6 py-3 bg-slate-700 rounded-lg shadow-lg hover:scale-105 transition transform" onclick="openModal('tour')">Take a Tour</button>
+        </div>
+      </section>
+
+      <!-- HOME / DASHBOARD -->
+      <section id="home" class="page fade">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-2xl font-bold">Dashboard</h2>
+          <div class="text-sm opacity-80">Signed in as <span id="currentUser">Guest</span></div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-slate-800 p-4 rounded-lg">
+            <h3 class="font-semibold">Quick Links</h3>
+            <ul class="mt-2 text-sm opacity-80 space-y-1">
+              <li><a href="#" onclick="openPage('aiTools')">AI Tools Directory</a></li>
+              <li><a href="#" onclick="openPage('hacking')">Ethical Hacking Courses</a></li>
+              <li><a href="#" onclick="openPage('automation')">Automation Tutorials</a></li>
+            </ul>
+          </div>
+          <div class="bg-slate-800 p-4 rounded-lg">
+            <h3 class="font-semibold">Saved Tools</h3>
+            <div id="savedPreview" class="mt-2 text-sm opacity-80">No saved tools yet.</div>
+          </div>
+
+          <div class="col-span-2 bg-slate-800 p-4 rounded-lg">
+            <h3 class="font-semibold">Latest AI-generated Idea</h3>
+            <div id="aiIdea" class="mt-2 opacity-80">Click "Generate AI Content" to create a quick idea (mock AI generator).</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI TOOLS -->
+      <section id="aiTools" class="page fade">
+        <h2 class="text-2xl font-bold mb-3">AI Tools Directory</h2>
+        <div id="aiGrid" class="grid gap-3"></div>
+      </section>
+
+      <!-- HACKING COURSES -->
+      <section id="hacking" class="page fade">
+        <h2 class="text-2xl font-bold mb-3">Ethical Hacking Courses (Safe & Legal)</h2>
+        <p class="opacity-80 mb-3">These modules are for learning defensive security, secure coding and responsible disclosure. Use isolated labs only.</p>
+        <div class="space-y-3">
+          <article class="bg-slate-800 p-4 rounded">
+            <h3 class="font-semibold">1. Networking Fundamentals</h3>
+            <p class="text-sm opacity-80">OSI model, TCP/IP, packet inspection basics.</p>
+            <button class="mt-2 px-3 py-1 bg-indigo-600 rounded" onclick="openCourse('networking')">Open module</button>
+          </article>
+
+          <article class="bg-slate-800 p-4 rounded">
+            <h3 class="font-semibold">2. Linux for Security</h3>
+            <p class="text-sm opacity-80">Command line, file permissions, sandboxing VMs.</p>
+            <button class="mt-2 px-3 py-1 bg-indigo-600 rounded" onclick="openCourse('linux')">Open module</button>
+          </article>
+
+          <article class="bg-slate-800 p-4 rounded">
+            <h3 class="font-semibold">3. Web Application Security</h3>
+            <p class="text-sm opacity-80">OWASP Top 10 overview, safe testing with Juice Shop.</p>
+            <button class="mt-2 px-3 py-1 bg-indigo-600 rounded" onclick="openCourse('web')">Open module</button>
+          </article>
+
+          <article class="bg-slate-800 p-4 rounded">
+            <h3 class="font-semibold">4. Responsible Disclosure</h3>
+            <p class="text-sm opacity-80">How to report vulnerabilities, templates, legal considerations.</p>
+            <button class="mt-2 px-3 py-1 bg-indigo-600 rounded" onclick="openCourse('disclosure')">Open module</button>
+          </article>
+        </div>
+      </section>
+
+      <!-- AUTOMATION -->
+      <section id="automation" class="page fade">
+        <h2 class="text-2xl font-bold mb-3">Automation Tutorials</h2>
+        <div class="grid gap-3">
+          <div class="bg-slate-800 p-4 rounded">Zapier: Build a simple Gmail → Airtable flow</div>
+          <div class="bg-slate-800 p-4 rounded">Make.com: Polling & webhooks</div>
+          <div class="bg-slate-800 p-4 rounded">ChatGPT: Automate emails with prompts</div>
+        </div>
+      </section>
+
+      <!-- GADGETS -->
+      <section id="gadgets" class="page fade">
+        <h2 class="text-2xl font-bold mb-3">Tech & Gadget Reviews</h2>
+        <div class="grid gap-3">
+          <div class="bg-slate-800 p-4 rounded">Smartphone Comparison: Feature vs Price</div>
+          <div class="bg-slate-800 p-4 rounded">Best Budget Laptops 2025</div>
+        </div>
+      </section>
+
+      <!-- SAVED TOOLS -->
+      <section id="saved" class="page fade">
+        <h2 class="text-2xl font-bold mb-3">Saved Tools</h2>
+        <div id="savedList" class="grid gap-3"></div>
+      </section>
+
+      <!-- ABOUT / DEVELOPERS -->
+      <section id="about" class="page fade">
+        <h2 class="text-2xl font-bold mb-3">About OG-PRATIK</h2>
+        <p class="opacity-80 mb-4">OG-PRATIK is a developer-focused platform built to help coders, security learners, and creators discover tools, practice safely, and automate workflows.</p>
+
+        <h3 class="text-xl font-semibold mb-2">Developers</h3>
+        <div class="space-y-3">
+          <div class="bg-slate-800 p-4 rounded">
+            <div class="flex items-start gap-3">
+              <div class="w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center font-bold">OP</div>
+              <div>
+                <div class="font-semibold">Pratik Sharma</div>
+                <div class="text-sm opacity-80">Founder & Full-stack Dev — Skills: Node.js, React, Security, DevOps</div>
+                <div class="text-sm mt-1"><a href="#" class="text-indigo-400">GitHub</a> • <a href="#" class="text-indigo-400">Portfolio</a></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-800 p-4 rounded">
+            <div class="flex items-start gap-3">
+              <div class="w-12 h-12 bg-emerald-600 rounded-full flex items-center justify-center font-bold">AM</div>
+              <div>
+                <div class="font-semibold">Aisha Malik</div>
+                <div class="text-sm opacity-80">Security Engineer — Skills: Web Sec, CVE triage, Pentesting (defensive)</div>
+                <div class="text-sm mt-1"><a href="#" class="text-indigo-400">GitHub</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- LOGIN / REGISTER (modal fallback for small screens) -->
+      <section id="login" class="page fade">
+        <h2 class="text-2xl font-bold mb-3">Account</h2>
+        <div class="grid grid-cols-1 gap-3">
+          <input id="regUser" placeholder="username" class="px-3 py-2 rounded bg-slate-800 border border-slate-700" />
+          <input id="regPass" type="password" placeholder="password" class="px-3 py-2 rounded bg-slate-800 border border-slate-700" />
+          <div class="flex gap-2">
+            <button class="px-4 py-2 bg-indigo-600 rounded" onclick="register()">Register</button>
+            <button class="px-4 py-2 bg-slate-700 rounded" onclick="signin()">Sign In</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- RIGHT COLUMN -->
+    <aside class="md:col-span-3 hidden md:block">
+      <div class="bg-slate-800 p-5 rounded-xl mb-4">
+        <h4 class="font-semibold">Notifications</h4>
+        <div id="notifArea" class="mt-3 text-sm opacity-80">No notifications</div>
+      </div>
+
+      <div class="bg-slate-800 p-5 rounded-xl">
+        <h4 class="font-semibold">AI Generator (mock)</h4>
+        <p class="text-sm opacity-80 mb-3">Generate short ideas (client-side mock). For production, wire to OpenAI or other API.</p>
+        <button class="px-4 py-2 bg-indigo-600 rounded" onclick="mockGenerate()">Generate Idea</button>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- MODALS -->
+  <div id="notif" class="modal">
+    <div class="panel bg-slate-800 p-6 rounded-xl w-11/12 md:w-96">
+      <h3 class="font-semibold text-lg mb-2">Notification</h3>
+      <p id="notifText" class="opacity-80 mb-4">This is a sample notification.</p>
+      <div class="flex justify-end gap-2">
+        <button class="px-3 py-2 bg-slate-700 rounded" onclick="closeModal('notif')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="aiGen" class="modal">
+    <div class="panel bg-slate-800 p-6 rounded-xl w-11/12 md:w-96">
+      <h3 class="font-semibold text-lg mb-2">AI Content Generator (mock)</h3>
+      <textarea id="aiPrompt" class="w-full p-3 bg-slate-900 rounded mb-3" placeholder="Enter a prompt"></textarea>
+      <div class="flex justify-between items-center">
+        <button class="px-3 py-2 bg-indigo-600 rounded" onclick="mockGenerate()">Generate</button>
+        <button class="px-3 py-2 bg-slate-700 rounded" onclick="closeModal('aiGen')">Close</button>
+      </div>
+      <div id="aiResult" class="mt-3 text-sm opacity-80"></div>
+    </div>
+  </div>
+
+  <div id="tour" class="modal">
+    <div class="panel bg-slate-800 p-6 rounded-xl w-11/12 md:w-2/3">
+      <h3 class="font-semibold text-lg mb-2">Quick Tour</h3>
+      <ol class="list-decimal pl-5 text-sm opacity-80">
+        <li>Use left navigation to open sections.</li>
+        <li>Saved tools are stored locally (demo).</li>
+        <li>Hacking courses are safe guides — use labs.</li>
+      </ol>
+      <div class="mt-4 flex justify-end"><button class="px-3 py-2 bg-indigo-600 rounded" onclick="closeModal('tour')">Close</button></div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS: Router, storage, mock DB -->
+  <script>
+    // Simple SPA router + transitions
+    const pages = document.querySelectorAll('.page');
+    function openPage(id) {
+      pages.forEach(p => { p.classList.remove('active','show') });
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('active');
+      setTimeout(() => el.classList.add('show'), 10);
+      // close mobile when navigating
+      document.getElementById('mobileDrawer')?.classList.remove('open');
+    }
+
+    // Mobile toggle
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    function toggleMobile() {
+      document.getElementById('mobileDrawer').classList.toggle('open');
+    }
+    mobileBtn?.addEventListener('click', toggleMobile);
+
+    document.querySelectorAll('.nav-link').forEach(b => b.addEventListener('click', e => {
+      const page = e.currentTarget.dataset.page;
+      openPage(page);
+      toggleMobile();
+    }));
+
+    // Modal helpers
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    // Mock local "database" using localStorage
+    const DB = {
+      usersKey: 'ogpratik_users_v1',
+      savedKey: 'ogpratik_saved_v1',
+      getUsers() { return JSON.parse(localStorage.getItem(this.usersKey) || '[]') },
+      putUser(u){ const users = this.getUsers(); users.push(u); localStorage.setItem(this.usersKey, JSON.stringify(users)); },
+      findUser(username){ return this.getUsers().find(x=>x.username===username) },
+      getSaved() { return JSON.parse(localStorage.getItem(this.savedKey) || '[]') },
+      saveTool(t){ const s = this.getSaved(); s.push(t); localStorage.setItem(this.savedKey, JSON.stringify(s)); renderSaved(); },
+      removeTool(index){ const s=this.getSaved(); s.splice(index,1); localStorage.setItem(this.savedKey, JSON.stringify(s)); renderSaved(); }
+    };
+
+    // Authentication (demo only - client side)
+    function register(){
+      const u = document.getElementById('regUser').value.trim();
+      const p = document.getElementById('regPass').value;
+      if(!u || !p){ alert('Enter username & password'); return }
+      if(DB.findUser(u)){ alert('User exists'); return }
+      DB.putUser({ username:u, pass:p });
+      alert('Registered — you can sign in now');
+    }
+    function signin(){
+      const u = document.getElementById('regUser').value.trim();
+      const p = document.getElementById('regPass').value;
+      const user = DB.findUser(u);
+      if(user && user.pass===p){
+        localStorage.setItem('ogpratik_current', u);
+        document.getElementById('currentUser').textContent = u;
+        alert('Signed in as ' + u);
+        openPage('home');
+      } else alert('Invalid credentials');
+    }
+
+    // Saved tools UI
+    function renderSaved(){
+      const list = document.getElementById('savedList');
+      const preview = document.getElementById('savedPreview');
+      const saved = DB.getSaved();
+      if(!list || !preview) return;
+      if(saved.length===0){ list.innerHTML='<div class="bg-slate-800 p-4 rounded">No saved tools.</div>'; preview.textContent='No saved tools yet.'; return }
+      preview.textContent = saved.map(s=>s.name).slice(0,3).join(', ');
+      list.innerHTML = saved.map((s,i)=>`<div class="bg-slate-800 p-3 rounded flex justify-between items-start"><div><div class="font-semibold">${s.name}</div><div class="text-sm opacity-80">${s.desc}</div></div><div class="flex gap-2"><button onclick="DB.removeTool(${i})" class="px-2 py-1 bg-red-600 rounded">Remove</button></div></div>`).join('');
+    }
+
+    // Mock AI tools list
+    const aiTools = [
+      { name:'ChatGPT', desc:'Conversational coding assistant' },
+      { name:'Copilot', desc:'AI code suggestions' },
+      { name:'Midjourney', desc:'AI image generation' },
+      { name:'DALL·E', desc:'Image generation (OpenAI)' }
+    ];
+
+    function renderAITools(){
+      const grid = document.getElementById('aiGrid');
+      grid.innerHTML = aiTools.map((t,i)=>`<div class="bg-slate-800 p-4 rounded flex justify-between items-start"><div><div class="font-semibold">${t.name}</div><div class="text-sm opacity-80">${t.desc}</div></div><div class="flex flex-col gap-2"><button onclick='DB.saveTool(${JSON.stringify(t)})' class="px-3 py-1 bg-indigo-600 rounded">Save</button><button onclick="openNotif('${t.name} saved')" class="px-3 py-1 bg-slate-700 rounded">Notify</button></div></div>`).join('');
+    }
+
+    // Notifications
+    function openNotif(msg){ document.getElementById('notifText').textContent = msg; openModal('notif'); document.getElementById('notifArea').textContent = msg }
+
+    // Mock AI generator
+    function mockGenerate(){
+      const prompt = document.getElementById('aiPrompt')?.value || 'Generate a micro startup idea for devs';
+      const out = `Idea for: "${prompt}"
+- One-line: Dev tool that automates code reviews using LLMs.
+- MVP: GitHub Action + quick UI.
+- Monetize: Premium integrations.`;
+      document.getElementById('aiResult') && (document.getElementById('aiResult').textContent = out);
+      document.getElementById('aiIdea') && (document.getElementById('aiIdea').textContent = out);
+    }
+
+    // Course opener
+    function openCourse(slug){
+      const courseContent = {
+        networking: 'Networking module: Learn OSI, TCP/UDP, basic Wireshark usage (lab recommendations).',
+        linux: 'Linux module: Commands, permissions, process monitoring, containers for safe labs.',
+        web: 'Web module: OWASP Top 10 explained, secure coding checks, Juice Shop demo (isolated).',
+        disclosure: 'Disclosure module: Templates, escalation paths, legal notes.'
+      };
+      document.getElementById('notifText').textContent = courseContent[slug] || 'Module not found';
+      openModal('notif');
+    }
+
+    // Simple onboarding: render lists, load saved
+    document.addEventListener('DOMContentLoaded', ()=>{
+      renderAITools();
+      renderSaved();
+      const cur = localStorage.getItem('ogpratik_current');
+      if(cur) document.getElementById('currentUser').textContent = cur;
+
+      // small router: landing by default
+      const hash = location.hash.replace('#','');
+      if(hash) openPage(hash);
+
+      // wire login button for desktop
+      document.getElementById('loginBtn')?.addEventListener('click', ()=> openPage('login'));
+
+      // wire mobile nav links
+      document.querySelectorAll('#mobileDrawer .nav-link').forEach(b=> b.addEventListener('click', e=>{ openPage(b.dataset.page) }));
+    });
+
+    // small keyboard shortcut: Ctrl+K to focus search
+    document.addEventListener('keydown', (e)=>{
+      if(e.ctrlKey && e.key.toLowerCase()==='k'){ e.preventDefault(); document.getElementById('searchInput')?.focus(); }
+    });
+
+  </script>
+
+</body>
+</html>
